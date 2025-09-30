@@ -78,7 +78,7 @@ class CamelsExtractor:
         ) = delineate_watershed(self.gauge_id)
         return self.watershed_gdf
     
-    def extract_all(self, verbose: bool = True) -> Dict:
+    def extract_all(self, verbose: bool = True, raise_on_error: bool = False) -> Dict:
         """
         Extract all CAMELS attributes.
         
@@ -86,27 +86,77 @@ class CamelsExtractor:
         ----------
         verbose : bool
             Print progress messages
+        raise_on_error : bool
+            If True, raise exception on critical errors. If False, continue with warnings.
         
         Returns
         -------
         dict
-            Dictionary containing all extracted attributes
+            Dictionary containing all extracted attributes with '_status' key indicating
+            which modules succeeded/failed
+        
+        Raises
+        ------
+        Exception
+            If raise_on_error=True and watershed delineation or topography extraction fails
         """
+        # Clear any previous extraction results
+        self.attributes = {}
+        self.watershed_gdf = None
+        self.watershed_geom = None
+        self.metadata = None
+        self.area_km2 = None
+        
+        # Track extraction status
+        extraction_status = {
+            "watershed": False,
+            "topography": False,
+            "climate": False,
+            "soil": False,
+            "vegetation": False,
+            "geology": False,
+            "hydrology": False
+        }
+        
         if verbose:
             print(f"Extracting CAMELS attributes for gauge {self.gauge_id}...")
         
-        # 1. Watershed delineation
+        # 1. Watershed delineation (CRITICAL - must succeed)
         if verbose:
             print("  [1/7] Delineating watershed...")
-        self.delineate()
+        try:
+            self.delineate()
+            extraction_status["watershed"] = True
+        except Exception as e:
+            error_msg = f"CRITICAL: Watershed delineation failed - {str(e)}"
+            if verbose:
+                print(f"      {error_msg}")
+            if raise_on_error:
+                raise Exception(error_msg)
+            else:
+                self.attributes["_errors"] = [error_msg]
+                self.attributes["_status"] = extraction_status
+                return self.attributes
         
-        # 2. Topographic attributes
+        # 2. Topographic attributes (CRITICAL - must succeed)
         if verbose:
             print("  [2/7] Extracting topographic attributes...")
-        topo_attrs = extract_topographic_attributes(self.watershed_geom)
-        self.attributes.update(topo_attrs)
+        try:
+            topo_attrs = extract_topographic_attributes(self.watershed_geom)
+            self.attributes.update(topo_attrs)
+            extraction_status["topography"] = True
+        except Exception as e:
+            error_msg = f"CRITICAL: Topographic extraction failed - {str(e)}"
+            if verbose:
+                print(f"      {error_msg}")
+            if raise_on_error:
+                raise Exception(error_msg)
+            else:
+                if "_errors" not in self.attributes:
+                    self.attributes["_errors"] = []
+                self.attributes["_errors"].append(error_msg)
         
-        # 3. Climate indices
+        # 3. Climate indices (OPTIONAL - warn on failure)
         if verbose:
             print("  [3/7] Extracting climate indices...")
         try:
@@ -115,41 +165,61 @@ class CamelsExtractor:
             )
             climate_attrs = compute_climate_indices(climate_ds)
             self.attributes.update(climate_attrs)
+            extraction_status["climate"] = True
         except Exception as e:
+            warning_msg = f"Climate extraction failed - {str(e)}"
             if verbose:
-                print(f"      Warning: Climate extraction failed - {str(e)}")
+                print(f"      Warning: {warning_msg}")
+            if "_warnings" not in self.attributes:
+                self.attributes["_warnings"] = []
+            self.attributes["_warnings"].append(warning_msg)
         
-        # 4. Soil characteristics
+        # 4. Soil characteristics (OPTIONAL - warn on failure)
         if verbose:
             print("  [4/7] Extracting soil characteristics...")
         try:
             soil_attrs = extract_soil_attributes(self.watershed_geom)
             self.attributes.update(soil_attrs)
+            extraction_status["soil"] = True
         except Exception as e:
+            warning_msg = f"Soil extraction failed - {str(e)}"
             if verbose:
-                print(f"      Warning: Soil extraction failed - {str(e)}")
+                print(f"      Warning: {warning_msg}")
+            if "_warnings" not in self.attributes:
+                self.attributes["_warnings"] = []
+            self.attributes["_warnings"].append(warning_msg)
         
-        # 5. Vegetation characteristics
+        # 5. Vegetation characteristics (OPTIONAL - warn on failure)
         if verbose:
             print("  [5/7] Extracting vegetation characteristics...")
         try:
             veg_attrs = extract_vegetation_attributes(self.watershed_geom)
             self.attributes.update(veg_attrs)
+            extraction_status["vegetation"] = True
         except Exception as e:
+            warning_msg = f"Vegetation extraction failed - {str(e)}"
             if verbose:
-                print(f"      Warning: Vegetation extraction failed - {str(e)}")
+                print(f"      Warning: {warning_msg}")
+            if "_warnings" not in self.attributes:
+                self.attributes["_warnings"] = []
+            self.attributes["_warnings"].append(warning_msg)
         
-        # 6. Geological characteristics
+        # 6. Geological characteristics (OPTIONAL - warn on failure)
         if verbose:
             print("  [6/7] Extracting geological characteristics...")
         try:
             geol_attrs = extract_geological_attributes(self.watershed_gdf)
             self.attributes.update(geol_attrs)
+            extraction_status["geology"] = True
         except Exception as e:
+            warning_msg = f"Geology extraction failed - {str(e)}"
             if verbose:
-                print(f"      Warning: Geology extraction failed - {str(e)}")
+                print(f"      Warning: {warning_msg}")
+            if "_warnings" not in self.attributes:
+                self.attributes["_warnings"] = []
+            self.attributes["_warnings"].append(warning_msg)
         
-        # 7. Hydrological signatures
+        # 7. Hydrological signatures (OPTIONAL - warn on failure)
         if verbose:
             print("  [7/7] Computing hydrological signatures...")
         try:
@@ -161,9 +231,14 @@ class CamelsExtractor:
                 self.area_km2
             )
             self.attributes.update(hydro_attrs)
+            extraction_status["hydrology"] = True
         except Exception as e:
+            warning_msg = f"Hydrology extraction failed - {str(e)}"
             if verbose:
-                print(f"      Warning: Hydrology extraction failed - {str(e)}")
+                print(f"      Warning: {warning_msg}")
+            if "_warnings" not in self.attributes:
+                self.attributes["_warnings"] = []
+            self.attributes["_warnings"].append(warning_msg)
         
         # Add metadata
         if self.metadata:
@@ -175,8 +250,19 @@ class CamelsExtractor:
                 "huc_02": self.metadata["huc_02"]
             })
         
+        # Add extraction status
+        self.attributes["_status"] = extraction_status
+        
+        # Report results
+        successful = sum(extraction_status.values())
+        total = len(extraction_status)
         if verbose:
             print(f"✓ Extraction complete! {len(self.attributes)} attributes extracted.")
+            print(f"  Modules: {successful}/{total} successful")
+            if "_errors" in self.attributes:
+                print(f"  Errors: {len(self.attributes['_errors'])}")
+            if "_warnings" in self.attributes:
+                print(f"  Warnings: {len(self.attributes['_warnings'])}")
         
         return self.attributes
     
