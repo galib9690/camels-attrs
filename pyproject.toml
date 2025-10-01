@@ -60,10 +60,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/mohammadgalib/camels-attrs"
-Documentation = "https://github.com/mohammadgalib/camels-attrs#readme"
-Repository = "https://github.com/mohammadgalib/camels-attrs"
-Issues = "https://github.com/mohammadgalib/camels-attrs/issues"
+Homepage = "https://github.com/galib9690/camels-attrs"
+Documentation = "https://github.com/galib9690/camels-attrs#readme"
+Repository = "https://github.com/galib9690/camels-attrs"
+Issues = "https://github.com/galib9690/camels-attrs/issues"
 
 [project.scripts]
 camels-extract = "camels_attributes.cli:main"

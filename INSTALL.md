@@ -13,7 +13,7 @@ pip install camels-attrs
 For development or to use the latest version:
 
 ```bash
-git clone https://github.com/mohammadgalib/camels-attrs.git
+git clone https://github.com/galib9690/camels-attrs.git
 cd camels-attrs
 pip install -e .
 ```

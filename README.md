@@ -29,7 +29,7 @@ pip install camels-attrs
 Or install from source:
 
 ```bash
-git clone https://github.com/mohammadgalib/camels-attrs.git
+git clone https://github.com/galib9690/camels-attrs.git
 cd camels-attrs
 pip install -e .
 ```
