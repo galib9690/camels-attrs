@@ -5,7 +5,7 @@
 The package can be installed directly from PyPI (once published):
 
 ```bash
-pip install camels-attributes
+pip install camels-attrs
 ```
 
 ## Development Installation
@@ -13,8 +13,8 @@ pip install camels-attributes
 For development or to use the latest version:
 
 ```bash
-git clone https://github.com/mohammadgalib/camels-attributes.git
-cd camels-attributes
+git clone https://github.com/mohammadgalib/camels-attrs.git
+cd camels-attrs
 pip install -e .
 ```
 

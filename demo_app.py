@@ -1,5 +1,5 @@
 """
-Demo application showing camels-attributes package information.
+Demo application showing camels-attrs package information.
 This is a simple Flask app to showcase the package documentation.
 """
 
@@ -128,12 +128,12 @@ HTML_TEMPLATE = """
             <strong>About:</strong> This package extracts 70+ watershed characteristics following the CAMELS methodology.
             <br><strong>Author:</strong> Mohammad Galib (mgalib@purdue.edu), Purdue University
             <br><br>
-            <strong>Note:</strong> This is a demonstration page for the camels-attributes Python package.
+            <strong>Note:</strong> This is a demonstration page for the camels-attrs Python package.
             The package is designed to be installed via pip and used programmatically or via CLI.
         </div>
         
         <h3>Installation</h3>
-        <pre style="background: #2c3e50; color: #ecf0f1;">pip install camels-attributes</pre>
+        <pre style="background: #2c3e50; color: #ecf0f1;">pip install camels-attrs</pre>
         
         <h3>Quick Start - Python API</h3>
         <pre>from camels_attributes import CamelsExtractor
@@ -192,9 +192,9 @@ if __name__ == '__main__':
     print("="*60)
     print("CAMELS Attributes Package - Documentation Demo")
     print("="*60)
-    print("\nThis is a demonstration page for the camels-attributes package.")
+    print("\nThis is a demonstration page for the camels-attrs package.")
     print("The package is designed to be installed and used as a library:")
-    print("\n  pip install camels-attributes")
+    print("\n  pip install camels-attrs")
     print("\nView the documentation at: http://localhost:5000")
     print("="*60)
     app.run(host='0.0.0.0', port=5000, debug=False)

@@ -1,4 +1,4 @@
-# CAMELS Attributes
+# CAMELS Attrs
 
 A Python package for extracting CAMELS-like catchment attributes for any USGS gauge site in the United States.
 
@@ -23,14 +23,14 @@ This package provides a simple, reproducible way to extract comprehensive catchm
 ## Installation
 
 ```bash
-pip install camels-attributes
+pip install camels-attrs
 ```
 
 Or install from source:
 
 ```bash
-git clone https://github.com/mohammadgalib/camels-attributes.git
-cd camels-attributes
+git clone https://github.com/mohammadgalib/camels-attrs.git
+cd camels-attrs
 pip install -e .
 ```
 
@@ -165,7 +165,7 @@ MIT License - see LICENSE file for details.
 If you use this package in your research, please cite:
 
 ```
-Galib, M. & Merwade, V. (2025). camels-attributes: A Python package for extracting 
+Galib, M. & Merwade, V. (2025). camels-attrs: A Python package for extracting 
 CAMELS-like catchment attributes. Lyles School of Civil Engineering, Purdue University.
 ```
 

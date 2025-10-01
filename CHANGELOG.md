@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2025-01-XX
 
 ### Added
-- Initial release of camels-attributes package
+- Initial release of camels-attrs package
 - Watershed delineation using NLDI API
 - Topographic attributes extraction from USGS 3DEP
 - Climate indices calculation from GridMET

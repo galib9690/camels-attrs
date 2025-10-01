@@ -1,5 +1,5 @@
 """
-Example usage of the camels-attributes package
+Example usage of the camels-attrs package
 """
 
 from camels_attributes import CamelsExtractor

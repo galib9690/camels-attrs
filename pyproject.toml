@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "camels-attributes"
+name = "camels-attrs"
 version = "0.1.0"
 description = "Extract CAMELS-like catchment attributes for any USGS gauge site in the USA"
 readme = "README.md"
@@ -60,10 +60,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/mohammadgalib/camels-attributes"
-Documentation = "https://github.com/mohammadgalib/camels-attributes#readme"
-Repository = "https://github.com/mohammadgalib/camels-attributes"
-Issues = "https://github.com/mohammadgalib/camels-attributes/issues"
+Homepage = "https://github.com/mohammadgalib/camels-attrs"
+Documentation = "https://github.com/mohammadgalib/camels-attrs#readme"
+Repository = "https://github.com/mohammadgalib/camels-attrs"
+Issues = "https://github.com/mohammadgalib/camels-attrs/issues"
 
 [project.scripts]
 camels-extract = "camels_attributes.cli:main"

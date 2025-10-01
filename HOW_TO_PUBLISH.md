@@ -1,6 +1,6 @@
 # Publishing to PyPI
 
-This guide explains how to publish the `camels-attributes` package to PyPI.
+This guide explains how to publish the `camels-attrs` package to PyPI.
 
 ## Prerequisites
 
@@ -62,7 +62,7 @@ python -m twine upload dist/*
 
 ```bash
 # Install from PyPI
-pip install camels-attributes
+pip install camels-attrs
 
 # Test
 python -c "from camels_attributes import CamelsExtractor; print('Success!')"

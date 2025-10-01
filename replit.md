@@ -1,8 +1,8 @@
-# CAMELS Attributes Extractor
+# CAMELS Attrs Extractor
 
 ## Overview
 
-CAMELS Attributes is a Python package that extracts comprehensive catchment attributes for any USGS gauge site in the United States, following the CAMELS (Catchment Attributes and Meteorology for Large-sample Studies) methodology. The package automates the extraction of 70+ watershed characteristics across multiple domains: topography, climate, soil, vegetation, geology, and hydrology.
+CAMELS Attrs is a Python package that extracts comprehensive catchment attributes for any USGS gauge site in the United States, following the CAMELS (Catchment Attributes and Meteorology for Large-sample Studies) methodology. The package automates the extraction of 70+ watershed characteristics across multiple domains: topography, climate, soil, vegetation, geology, and hydrology.
 
 **Purpose:** Provide researchers with a reproducible, automated workflow to generate standardized catchment attributes for hydrological modeling and large-sample hydrology studies.
 

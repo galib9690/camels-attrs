@@ -1,8 +1,8 @@
-# CAMELS Attributes Package - Project Complete
+# CAMELS Attrs Package - Project Complete
 
 ## Project Overview
 
-**camels-attributes** is a production-ready Python package for extracting comprehensive catchment attributes for any USGS gauge site in the United States, following the CAMELS methodology.
+**camels-attrs** is a production-ready Python package for extracting comprehensive catchment attributes for any USGS gauge site in the United States, following the CAMELS methodology.
 
 **Author:** Mohammad Galib (mgalib@purdue.edu), Purdue University
 
@@ -38,7 +38,7 @@ camels-extract 01031500 02177000 -o combined.csv
 ## Project Structure
 
 ```
-camels-attributes/
+camels-attrs/
 ├── camels_attributes/          # Main package
 │   ├── __init__.py            # Package initialization
 │   ├── extractor.py           # Main orchestrator class
