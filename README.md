@@ -1,5 +1,7 @@
 # CAMELS Attrs
 
+![CAMELS Attrs](assets/thumbnail.png)
+
 A Python package for extracting CAMELS-like catchment attributes for any USGS gauge site in the United States.
 
 ## Overview
