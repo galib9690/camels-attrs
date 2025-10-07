@@ -9,24 +9,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial release of camels-attrs package
-- Watershed delineation using NLDI API
-- Topographic attributes extraction from USGS 3DEP
-- Climate indices calculation from GridMET
-- Soil characteristics from gNATSGO and POLARIS
-- Vegetation metrics from MODIS and NLCD
-- Geological properties from GLiM and GLHYMPS (optional)
-- Hydrological signatures from USGS NWIS
+- **Static Catchment Attributes:**
+  - Watershed delineation using NLDI API
+  - Topographic attributes extraction from USGS 3DEP
+  - Climate indices calculation from GridMET
+  - Soil characteristics from gNATSGO and POLARIS
+  - Vegetation metrics from MODIS and NLCD
+  - Geological properties from GLiM and GLHYMPS (optional)
+  - Hydrological signatures from USGS NWIS
+- **Hydrometeorological Timeseries Data:**
+  - Daily forcing data from GridMET (precipitation, temperature, solar radiation, wind, humidity)
+  - PET calculations (GridMET and Hargreaves-Samani methods)
+  - Monthly aggregation functions
+  - Water balance calculations
+  - Forcing statistics computation
 - Python API via `CamelsExtractor` class
-- Command-line interface via `camels-extract` command
+- Command-line interface via `camels-extract` command with timeseries support
 - Support for single and multiple gauge processing
 - Comprehensive documentation and examples
 
 ### Features
 - 70+ catchment attributes following CAMELS methodology
+- Daily hydrometeorological forcing data extraction
 - Graceful handling of missing data with default values
 - Customizable date ranges for climate and hydrology data
 - CSV and JSON export formats
 - Batch processing capability
+- Optional monthly aggregations
+- Separate timeseries extraction mode
 
 ### Dependencies
 - Core: numpy, pandas, geopandas, xarray, rioxarray

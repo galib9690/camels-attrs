@@ -3,7 +3,7 @@ Main CAMELS extractor class that orchestrates all attribute extraction
 """
 
 import pandas as pd
-from typing import Dict, Optional
+from typing import Dict, Optional, Tuple
 
 from .watershed import delineate_watershed
 from .topography import extract_topographic_attributes
@@ -12,6 +12,13 @@ from .soil import extract_soil_attributes
 from .vegetation import extract_vegetation_attributes
 from .geology import extract_geological_attributes
 from .hydrology import extract_hydrological_signatures
+from .timeseries import (
+    fetch_forcing_data, 
+    calculate_pet_hargreaves,
+    calculate_forcing_statistics,
+    get_monthly_summary,
+    calculate_water_balance
+)
 
 
 class CamelsExtractor:
@@ -52,8 +59,8 @@ class CamelsExtractor:
         gauge_id: str,
         climate_start: str = "2000-01-01",
         climate_end: str = "2020-12-31",
-        hydro_start: str = "2000-01-01",
-        hydro_end: str = "2020-12-31"
+        hydro_start: str = "1989-10-01",
+        hydro_end: str = "2009-09-30"
     ):
         self.gauge_id = str(gauge_id)
         self.climate_start = climate_start
@@ -193,7 +200,7 @@ class CamelsExtractor:
         if verbose:
             print("  [5/7] Extracting vegetation characteristics...")
         try:
-            veg_attrs = extract_vegetation_attributes(self.watershed_geom)
+            veg_attrs = extract_vegetation_attributes(self.watershed_geom, self.gauge_id)
             self.attributes.update(veg_attrs)
             extraction_status["vegetation"] = True
         except Exception as e:
@@ -291,6 +298,71 @@ class CamelsExtractor:
         """
         return self.attributes.copy()
     
+    def extract_timeseries(
+        self,
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None,
+        include_hargreaves_pet: bool = True
+    ) -> pd.DataFrame:
+        """
+        Extract hydrometeorological time series data from GridMET.
+        
+        Parameters
+        ----------
+        start_date : str, optional
+            Start date (YYYY-MM-DD). Defaults to self.climate_start
+        end_date : str, optional
+            End date (YYYY-MM-DD). Defaults to self.climate_end
+        include_hargreaves_pet : bool, optional
+            Whether to calculate PET using Hargreaves method
+        
+        Returns
+        -------
+        pd.DataFrame
+            Daily hydrometeorological forcing data
+        """
+        # Use dates from initialization if not provided
+        start = start_date or self.climate_start
+        end = end_date or self.climate_end
+        
+        print(f"\nExtracting timeseries data for gauge {self.gauge_id}...")
+        print(f"Period: {start} to {end}")
+        
+        # Delineate watershed if not already done
+        if self.watershed_geom is None:
+            self.delineate()
+        
+        # Fetch forcing data
+        df = fetch_forcing_data(self.watershed_geom, start, end)
+        
+        if df is None:
+            raise Exception("Failed to fetch forcing data")
+        
+        # Calculate additional PET if requested
+        if include_hargreaves_pet:
+            centroid = self.watershed_gdf.to_crs('EPSG:4326').centroid.iloc[0]
+            df = calculate_pet_hargreaves(df, centroid.y)
+        
+        print(f"✓ Retrieved {len(df)} days of forcing data")
+        
+        return df
+    
+    def get_forcing_statistics(self, forcing_df: pd.DataFrame) -> Dict:
+        """
+        Calculate statistics from forcing timeseries.
+        
+        Parameters
+        ----------
+        forcing_df : pd.DataFrame
+            Daily forcing data from extract_timeseries()
+        
+        Returns
+        -------
+        dict
+            Climate forcing statistics
+        """
+        return calculate_forcing_statistics(forcing_df)
+    
     def save(self, filepath: str, format: str = "csv"):
         """
         Save attributes to file.
@@ -312,6 +384,60 @@ class CamelsExtractor:
             raise ValueError(f"Unsupported format: {format}")
         
         print(f"✓ Attributes saved to {filepath}")
+    
+    def create_comprehensive_map(self, save_path: str = None, show: bool = True):
+        """
+        Create a comprehensive multi-panel watershed visualization.
+        
+        This method generates a rich, publication-ready watershed map with:
+        - DEM elevation background
+        - Watershed boundary and stream network
+        - Gauge location marker
+        - USA location context map
+        - Key statistics panel (topography, climate, vegetation, hydrology)
+        - Elevation profile
+        - Land cover distribution pie chart
+        - Climate water balance summary
+        
+        Parameters
+        ----------
+        save_path : str, optional
+            Path to save the figure (e.g., 'watershed_map.png')
+        show : bool, optional
+            Whether to display the figure (default: True)
+        
+        Returns
+        -------
+        matplotlib.figure.Figure
+            The created figure object
+        
+        Examples
+        --------
+        >>> extractor = CamelsExtractor('01031500')
+        >>> attributes = extractor.extract_all()
+        >>> fig = extractor.create_comprehensive_map(save_path='map.png')
+        """
+        from .visualization import create_comprehensive_watershed_map
+        import matplotlib.pyplot as plt
+        
+        if self.watershed_gdf is None or self.metadata is None:
+            raise ValueError(
+                "Watershed not delineated. Call extract_all() or delineate() first."
+            )
+        
+        fig = create_comprehensive_watershed_map(
+            watershed_gdf=self.watershed_gdf,
+            watershed_geom=self.watershed_geom,
+            metadata=self.metadata,
+            attributes=self.attributes if self.attributes else None,
+            gauge_id=self.gauge_id,
+            save_path=save_path
+        )
+        
+        if show:
+            plt.show()
+        
+        return fig
 
 
 def extract_multiple_gauges(gauge_ids: list, **kwargs) -> pd.DataFrame:

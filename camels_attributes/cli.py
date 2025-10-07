@@ -5,6 +5,7 @@ Command-line interface for CAMELS attributes extraction
 import argparse
 import sys
 from .extractor import CamelsExtractor, extract_multiple_gauges
+from .timeseries import get_monthly_summary, calculate_water_balance
 
 
 def main():
@@ -78,6 +79,24 @@ Examples:
     )
     
     parser.add_argument(
+        "--timeseries",
+        action="store_true",
+        help="Extract hydrometeorological timeseries data (in addition to static attributes)"
+    )
+    
+    parser.add_argument(
+        "--timeseries-only",
+        action="store_true",
+        help="Extract only timeseries data (skip static attributes)"
+    )
+    
+    parser.add_argument(
+        "--monthly",
+        action="store_true",
+        help="Also output monthly aggregated data (requires --timeseries)"
+    )
+    
+    parser.add_argument(
         "--version",
         action="version",
         version="%(prog)s 0.1.0"
@@ -90,7 +109,7 @@ Examples:
         if len(args.gauge_ids) == 1:
             gauge_id = args.gauge_ids[0]
             if not args.quiet:
-                print(f"Extracting CAMELS attributes for gauge {gauge_id}...\n")
+                print(f"Extracting CAMELS data for gauge {gauge_id}...\n")
             
             extractor = CamelsExtractor(
                 gauge_id,
@@ -100,12 +119,46 @@ Examples:
                 hydro_end=args.hydro_end
             )
             
-            attributes = extractor.extract_all(verbose=not args.quiet)
-            extractor.save(args.output, format=args.format)
+            # Extract static attributes unless timeseries-only
+            if not args.timeseries_only:
+                attributes = extractor.extract_all(verbose=not args.quiet)
+                extractor.save(args.output, format=args.format)
+                
+                if not args.quiet:
+                    print(f"\n✓ Static attributes complete! {len(attributes)} attributes extracted.")
+                    print(f"  Output: {args.output}")
             
-            if not args.quiet:
-                print(f"\n✓ Complete! {len(attributes)} attributes extracted.")
-                print(f"  Output: {args.output}")
+            # Extract timeseries if requested
+            if args.timeseries or args.timeseries_only:
+                if not args.quiet:
+                    print(f"\nExtracting hydrometeorological timeseries...")
+                
+                forcing_df = extractor.extract_timeseries()
+                
+                # Save timeseries
+                ts_output = args.output.replace('.csv', '_timeseries.csv').replace('.json', '_timeseries.csv')
+                forcing_df.to_csv(ts_output, index=False)
+                
+                if not args.quiet:
+                    print(f"✓ Timeseries data saved: {ts_output}")
+                
+                # Save monthly data if requested
+                if args.monthly:
+                    monthly_df = get_monthly_summary(forcing_df)
+                    monthly_output = args.output.replace('.csv', '_monthly.csv').replace('.json', '_monthly.csv')
+                    monthly_df.to_csv(monthly_output, index=False)
+                    
+                    if not args.quiet:
+                        print(f"✓ Monthly data saved: {monthly_output}")
+                
+                # Calculate and save forcing statistics
+                forcing_stats = extractor.get_forcing_statistics(forcing_df)
+                stats_output = args.output.replace('.csv', '_forcing_stats.csv').replace('.json', '_forcing_stats.csv')
+                import pandas as pd
+                pd.DataFrame([forcing_stats]).to_csv(stats_output, index=False)
+                
+                if not args.quiet:
+                    print(f"✓ Forcing statistics saved: {stats_output}")
         
         # Multiple gauges
         else:

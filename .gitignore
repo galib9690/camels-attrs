@@ -65,7 +65,7 @@ venv.bak/
 .DS_Store
 Thumbs.db
 
-# Project specific
+# Project specific outputs
 outputs/
 *.csv
 *.json
@@ -73,3 +73,38 @@ outputs/
 !package.json
 example_output.csv
 multiple_gauges.csv
+
+# Cache directory (auto-generated data)
+cache/
+*.sqlite
+*.nc
+
+# Generated images and outputs
+*.png
+!assets/*.png
+comprehensive_watershed_map.png
+forcing_timeseries.png
+multi_gauge_comparison.png
+test_comprehensive_map_UPDATED.png
+
+# Test and temporary files
+test_*.py
+*_test.py
+temp_*.py
+example_usage.py
+
+# Development/Internal documentation
+IMPROVEMENTS_SUMMARY.md
+PROJECT_SUMMARY.md
+replit.md
+CLEANUP_GUIDE.md
+
+# Attached assets (development artifacts)
+attached_assets/
+stock_images/
+
+# Old package versions
+camels_attrs/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
