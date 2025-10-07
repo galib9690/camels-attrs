@@ -1,7 +1,12 @@
+# ========================================
+# COMPREHENSIVE PYTHON PACKAGE .GITIGNORE
+# ========================================
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
 
 # C extensions
 *.so
@@ -31,6 +36,10 @@ MANIFEST
 *.manifest
 *.spec
 
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
 # Unit test / coverage reports
 htmlcov/
 .tox/
@@ -45,7 +54,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
-# Environments
+# Virtual environments
 .env
 .venv
 env/
@@ -54,57 +63,158 @@ ENV/
 env.bak/
 venv.bak/
 
-# IDEs
+# IDEs and editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+.spyderproject
+.spyproject
+.ropeproject
 
-# OS files
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
-# Project specific outputs
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath
+*.sage.py
+
+# Node.js (if using npm)
+node_modules/
+npm-debug.log*
+
+# Temporary files
+*.tmp
+*.temp
+temp_*
+tmp_*
+
+# Logs
+*.log
+logs/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# ========================================
+# PROJECT SPECIFIC PATTERNS
+# ========================================
+
+# Cache directories (auto-generated data)
+cache/
+*.sqlite
+*.nc
+*.nc4
+*.hdf
+*.h5
+
+# Generated outputs and results
 outputs/
 *.csv
 *.json
 !pyproject.toml
-!package.json
-example_output.csv
-multiple_gauges.csv
+results/
+temp/
+tmp/
 
-# Cache directory (auto-generated data)
-cache/
-*.sqlite
-*.nc
-
-# Generated images and outputs
+# Generated images and plots
 *.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.pdf
 !assets/*.png
+!assets/*.jpg
+!assets/*.jpeg
+!assets/*.svg
+
+# Specific output files to ignore
 comprehensive_watershed_map.png
 forcing_timeseries.png
 multi_gauge_comparison.png
 test_comprehensive_map_UPDATED.png
+example_output.csv
+multiple_gauges.csv
 
-# Test and temporary files
+# Test and development files
 test_*.py
 *_test.py
+tests/
+test_*.ipynb
+*_test.ipynb
 temp_*.py
+temp_*.ipynb
 example_usage.py
+demo_app.py
 
-# Development/Internal documentation
+# Development documentation (internal use)
 IMPROVEMENTS_SUMMARY.md
 PROJECT_SUMMARY.md
-replit.md
 CLEANUP_GUIDE.md
+replit.md
+*.md.bak
 
 # Attached assets (development artifacts)
 attached_assets/
 stock_images/
+development_assets/
 
 # Old package versions
 camels_attrs/
+old_version/
+backup/
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints/
+# Replit specific
+.replit
+.replit.nix
+
+# Local development files
+.local/
+local/
+development/
+dev/
+
+# Documentation builds
+docs/_build/
+.readthedocs.yml
+
+# Coverage reports
+htmlcov/
+coverage.xml
+*.cover
+
+# Profiling
+prof/
+*.prof
+
+# Package build artifacts
+*.whl
