@@ -11,10 +11,7 @@ A Python package for extracting CAMELS-like catchment attributes for any USGS ga
 ## Overview
 
 This package provides a simple, reproducible way to extract comprehensive catchment attributes following the CAMELS (Catchment Attributes and Meteorology for Large-sample Studies) methodology. It automates the extraction of topographic, climatic, soil, vegetation, geological, and hydrological characteristics for any USGS-monitored watershed.
-
-**Author:** Mohammad Galib (mgalib@purdue.edu)
-**Affiliation:** Lyles School of Civil Engineering, Purdue University
-**Version:** 0.1.0
+Additionally, it can fetch daily hydrometeorological forcing data (precipitation, temperature, solar radiation, wind speed, humidity) from the GridMET dataset for user-defined date ranges. The package also includes a new feature to create a comprehensive multi-panel watershed map that visualizes key attributes and spatial context.
 
 ## Features
 
