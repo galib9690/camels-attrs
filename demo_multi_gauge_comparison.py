@@ -3,7 +3,7 @@ Demo script showing multi-gauge comparison visualization
 Compares attributes across multiple watersheds on US maps
 """
 
-from camels_attributes import create_multi_gauge_comparison
+from camels_attrs import create_multi_gauge_comparison
 
 print("=" * 60)
 print("DEMO: Multi-Gauge Attribute Comparison")

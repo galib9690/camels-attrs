@@ -70,7 +70,7 @@ If `pygeoglim` is not installed, the package will still work but will return def
 #### Python API
 
 ```python
-from camels_attributes import CamelsExtractor
+from camels_attrs import CamelsExtractor
 
 # Extract static attributes for a single gauge
 extractor = CamelsExtractor('01031500')  # USGS gauge ID
@@ -101,7 +101,7 @@ camels-extract 01031500 --hydro-start 2010-01-01 --hydro-end 2020-12-31
 #### Python API
 
 ```python
-from camels_attributes import CamelsExtractor, fetch_forcing_data, get_monthly_summary
+from camels_attrs import CamelsExtractor, fetch_forcing_data, get_monthly_summary
 
 # Extract timeseries data using the extractor class
 extractor = CamelsExtractor('01031500')
@@ -114,7 +114,7 @@ forcing_data = fetch_forcing_data(watershed_geometry, '2020-01-01', '2020-12-31'
 monthly_data = get_monthly_summary(forcing_data)
 
 # Calculate water balance
-from camels_attributes import calculate_water_balance
+from camels_attrs import calculate_water_balance
 water_balance = calculate_water_balance(forcing_data)
 ```
 
@@ -139,7 +139,7 @@ camels-extract 01031500 --climate-start 2010-01-01 --climate-end 2020-12-31 --ti
 #### Python API
 
 ```python
-from camels_attributes import CamelsExtractor
+from camels_attrs import CamelsExtractor
 
 # Extract attributes
 extractor = CamelsExtractor('01031500')
@@ -165,7 +165,7 @@ fig = extractor.create_comprehensive_map(
 #### Standalone Visualization Function
 
 ```python
-from camels_attributes import create_comprehensive_watershed_map
+from camels_attrs import create_comprehensive_watershed_map
 
 # Use the standalone function for custom workflows
 fig = create_comprehensive_watershed_map(
@@ -205,7 +205,7 @@ fig = create_comprehensive_watershed_map(
 #### Batch Processing Multiple Gauges
 
 ```python
-from camels_attributes import extract_multiple_gauges
+from camels_attrs import extract_multiple_gauges
 
 # Process multiple gauges
 gauge_ids = ['01031500', '02177000', '06803530']
@@ -227,7 +227,7 @@ forcing_data = extractor.extract_timeseries(
 #### Climate Statistics from Timeseries
 
 ```python
-from camels_attributes import calculate_forcing_statistics
+from camels_attrs import calculate_forcing_statistics
 
 # Calculate comprehensive climate statistics
 stats = extractor.get_forcing_statistics(forcing_data)
@@ -259,7 +259,7 @@ The package extracts daily hydrometeorological forcing data from GridMET:
 #### Core Timeseries Functions
 
 ```python
-from camels_attributes import (
+from camels_attrs import (
     fetch_forcing_data,
     calculate_pet_hargreaves,
     get_monthly_summary,

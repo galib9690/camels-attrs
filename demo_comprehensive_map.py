@@ -3,7 +3,7 @@ Demo script showing how to use the unified camels_attributes module
 with comprehensive visualization capabilities.
 """
 
-from camels_attributes import CamelsExtractor
+from camels_attrs import CamelsExtractor
 
 # Example 1: Simple extraction with comprehensive map
 print("=" * 60)

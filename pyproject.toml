@@ -66,9 +66,9 @@ Repository = "https://github.com/galib9690/camels-attrs"
 Issues = "https://github.com/galib9690/camels-attrs/issues"
 
 [project.scripts]
-camels-extract = "camels_attributes.cli:main"
+camels-extract = "camels_attrs.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["camels_attributes*"]
+include = ["camels_attrs*"]
 exclude = ["tests*"]
