@@ -48,6 +48,9 @@ dependencies = [
     "hydrofunctions>=0.2.0",
     "matplotlib>=3.4.0",
     "requests>=2.25.0",
+    "contextily>=1.2.0",
+    "cartopy>=0.20.0",
+    "typing>=3.8.0",
 ]
 
 [project.optional-dependencies]
