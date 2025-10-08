@@ -3,6 +3,8 @@
 ![CAMELS Attrs](assets/thumbnail.png)
 
 [![PyPI version](https://badge.fury.io/py/camels-attrs.svg)](https://pypi.org/project/camels-attrs/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Downloads](https://static.pepy.tech/badge/camels-attrs)](https://pepy.tech/project/camels-attrs)
 
 A Python package for extracting CAMELS-like catchment attributes for any USGS gauge site in the United States.
 
