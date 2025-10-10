@@ -26,5 +26,6 @@ keywords:
   - hydrological modeling
   - open science
 license: MIT
-version: 0.2.1
-date-released: "2025-10-08"
+version: 1.0.1
+date-released: "2025-10-10"
+doi: 10.5281/zenodo.17315038
