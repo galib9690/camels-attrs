@@ -43,3 +43,8 @@ Homepage = "https://github.com/galib9690/camels-attrs"
 Documentation = "https://github.com/galib9690/camels-attrs/blob/main/README.md"
 Repository = "https://github.com/galib9690/camels-attrs.git"
 "Bug Tracker" = "https://github.com/galib9690/camels-attrs/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]  # Root of the project
+include = ["camels_attrs*"]  # Include only the camels_attrs package
+exclude = ["assets*", "tests*"]  # Exclude assets and tests
