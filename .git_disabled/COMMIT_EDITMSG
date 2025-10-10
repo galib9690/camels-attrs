@@ -1,0 +1,8 @@
+Update ORCID IDs for JOSS submission
+
+✅ CORRECTED ORCID IDS:
+- Mohammad Galib: 0000-0001-8593-9110
+- Venkatesh Merwade: 0000-0001-5518-2890
+
+Updated in both paper.md and CITATION.cff files.
+Ready for JOSS submission && git push origin main

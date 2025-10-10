@@ -1,0 +1,30 @@
+cff-version: 1.0.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "camels-attrs: A Python Package for Extracting CAMELS-like Catchment Attributes"
+authors:
+  - family-names: Galib
+    given-names: Mohammad
+    email: mgalib@purdue.edu
+    affiliation: "Lyles School of Civil Engineering, Purdue University"
+    orcid: "https://orcid.org/0000-0001-8593-9110"
+  - family-names: Merwade
+    given-names: Venkatesh
+    email: vmerwade@purdue.edu
+    affiliation: "Lyles School of Civil Engineering, Purdue University"
+    orcid: "https://orcid.org/0000-0001-5518-2890"
+repository-code: "https://github.com/galib9690/camels-attrs"
+url: "https://github.com/galib9690/camels-attrs"
+abstract: "An open-source Python package for extracting comprehensive CAMELS-like catchment attributes and hydrometeorological timeseries for any USGS gauge site in the United States. The package automates watershed delineation and extraction of topographic, climatic, soil, vegetation, geological, and hydrological characteristics following the CAMELS methodology."
+keywords:
+  - hydrology
+  - catchment attributes
+  - CAMELS
+  - watershed characterization
+  - USGS
+  - Python
+  - hydrological modeling
+  - open science
+license: MIT
+version: 0.2.1
+date-released: "2025-10-08"
